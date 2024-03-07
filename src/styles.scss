@@ -42,3 +42,11 @@ body {
 }
 
 $main-color: #d9d9d9;
+
+.rectangle {
+  display: flex;
+  padding: 20px;
+  margin: 20px;
+  background-color: $main-color;
+  border-radius: 20px;
+}
