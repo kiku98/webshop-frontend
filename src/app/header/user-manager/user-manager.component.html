@@ -1,1 +1,13 @@
-<p>user-manager works!</p>
+<div id="user-manager">
+    <div class="circle">
+        <mat-icon fontIcon="person"></mat-icon>
+    </div>
+    <mat-form-field>
+        <mat-label>Selecciona un usuario</mat-label>
+        <mat-select [(value)]="selectedUser">
+            <mat-option value="user1">Usario 1</mat-option>
+            <mat-option value="user2">Usario 2</mat-option>
+            <mat-option value="user3">Usario 3</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
