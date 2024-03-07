@@ -3,5 +3,12 @@
   "eslint.validate": ["typescript"],
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
   }
 }

@@ -1,0 +1,15 @@
+mat-toolbar {
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 10px;
+  height: 54px;
+  width: 100%;
+}
+
+mat-icon {
+  scale: 2;
+  padding-left: 16px;
+  padding-right: 16px;
+}
