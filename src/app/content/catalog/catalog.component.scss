@@ -1,0 +1,10 @@
+@import "../../../styles.scss";
+
+.rectangle {
+  display: flex;
+  height: calc(100% - 80px);
+  padding: 20px;
+  margin: 20px;
+  background-color: $main-color;
+  border-radius: 20px;
+}

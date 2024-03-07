@@ -1,0 +1,17 @@
+#content {
+  display: flex;
+  height: 100%;
+  width: 100vw;
+  gap: 60px;
+}
+
+app-catalog {
+  width: calc(50% - 30px);
+}
+
+#details-and-cart {
+  display: flex;
+  width: calc(50% - 30px);
+  flex-direction: column;
+  gap: 60px;
+}
