@@ -1,3 +1,29 @@
 <div class="rectangle catalog">
-    Catalog
+    <h2 class="title">Catalogo de productos</h2>
+    <div class="scrollable-table">
+        <table>
+            <tbody>
+                <tr *ngFor="let product of products">
+                    <td>
+                        <div class="containerInfo">
+                            <div class="containerInfo-a">
+                                {{ product.name }}
+                                <mat-icon class='icon-info' (click)="showInfo(product)">info</mat-icon>
+                            </div>
+                            {{ product.price | currency:'COP':'symbol' }}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="span">
+                            <mat-icon class='icon-remove'
+                                (click)="decrementQuantity(product)">remove_circle_outline</mat-icon>
+                            {{ product.quantity }}
+                            <mat-icon class='icon-add' (click)="incrementQuantity(product)">add_circle</mat-icon>
+                            <mat-icon class='icon-add-cart' (click)="addToCart(product)">add_shopping_cart</mat-icon>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

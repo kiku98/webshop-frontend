@@ -8,12 +8,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CatalogComponent } from './content/catalog/catalog.component';
 import { ContentComponent } from './content/content.component';
+import { ShoppingCartComponent } from './content/shopping-cart/shopping-cart.component';
 import { HeaderComponent } from './header/header.component';
 import { UserManagerComponent } from './header/user-manager/user-manager.component';
-import { CatalogComponent } from './content/catalog/catalog.component';
-import { DetailsComponent } from './content/details/details.component';
-import { ShoppingCartComponent } from './content/shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { ShoppingCartComponent } from './content/shopping-cart/shopping-cart.com
     HeaderComponent,
     UserManagerComponent,
     CatalogComponent,
-    DetailsComponent,
     ShoppingCartComponent,
   ],
   imports: [
