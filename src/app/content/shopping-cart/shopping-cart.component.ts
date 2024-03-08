@@ -18,4 +18,12 @@ export class ShoppingCartComponent {
       this.shopping_cart = shopping_cart;
     });
   }
+
+  formatNumberWithCommas(num: number): string {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  doSomething(): void {
+    window.alert('Does something');
+  }
 }
