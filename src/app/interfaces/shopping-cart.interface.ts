@@ -20,3 +20,10 @@ export enum UnitType {
   gramo = 'gramo',
   kilo = 'kilo',
 }
+
+export const empty_shopping_cart: ShoppingCart = {
+  shopping_card_id: -1,
+  total_price: -1,
+  total_discount: -1,
+  products: [],
+};
