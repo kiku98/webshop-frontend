@@ -24,14 +24,19 @@ export class UsersService {
   }
 
   async getUsers(): Promise<void> {
-    // TODO: Replace with API call
-    // this.users = (await this.restService.getData('users')) as User[];
+    //TODO: Remove the MOCK-data and try catch block
     this.users = mock_users;
+    try {
+      this.users = (await this.restService.getData('users')).data as User[];
+    } catch (error) {
+      console.log(
+        'Using mock data for users, as the backend can not be reached.',
+      );
+    }
   }
 
   changeCurrentUserToId(user_id: number): void {
     const selected_user = this.users.find((user) => user.user_id == user_id);
     this.currentUser.next(selected_user as User);
-    // TODO: Now also update the shopping cart in the shopping cart service
   }
 }
