@@ -71,7 +71,6 @@ table {
 th,
 td {
   padding: 10px;
-
   text-align: left;
   border-bottom: 1px solid;
 }
@@ -79,14 +78,15 @@ td {
 button {
   margin-right: 5px;
 }
+
 .containerInfo {
   display: flex;
   flex-direction: column;
-  justify-content: space-center;
+  justify-content: start;
   align-items: flex-start;
   text-align: start;
-  margin-right: 18rem;
 }
+
 .containerInfo-a {
   font-weight: bold;
   display: flex;
@@ -126,8 +126,14 @@ button {
 .icon-add-cart:hover {
   cursor: pointer;
 }
+
 .span {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+}
+
+.quantity {
+  width: 20px;
+  text-align: center;
 }

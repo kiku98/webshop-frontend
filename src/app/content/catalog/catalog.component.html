@@ -17,7 +17,7 @@
                         <span class="span">
                             <mat-icon class='icon-remove'
                                 (click)="decrementQuantity(product)">remove_circle_outline</mat-icon>
-                            {{ product.quantity }}
+                            <p class="quantity">{{ product.quantity }}</p>
                             <mat-icon class='icon-add' (click)="incrementQuantity(product)">add_circle</mat-icon>
                             <mat-icon class='icon-add-cart' (click)="addToCart(product)">add_shopping_cart</mat-icon>
                         </span>

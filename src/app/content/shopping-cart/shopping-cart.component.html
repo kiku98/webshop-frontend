@@ -4,7 +4,7 @@
         <table>
             <tbody>
                 <tr *ngFor="let product of shopping_cart.products">
-                    <td>
+                    <td class="alignTop">
                         <div class="containerInfo">
                             <div class="containerInfo-a">
                                 {{ product.name }}
@@ -14,25 +14,29 @@
                         </div>
                     </td>
                     <td>
-                        <span class=" span">
+                        <span class="span">
                             <mat-icon class='icon-remove' (click)="doSomething()">remove_circle_outline</mat-icon>
-                            {{ product.quantity }}
+                            <p class="quantity">{{ product.quantity }}</p>
                             <mat-icon class='icon-add' (click)="doSomething()">add_circle</mat-icon>
-                            <mat-icon class='icon-add-cart' (click)="doSomething()">add_shopping_cart</mat-icon>
+                            <mat-icon fontIcon="delete" class='icon-add-cart' (click)="doSomething()"></mat-icon>
                         </span>
+                        <div class="productPrice">
+                            <h5 class="subPrice" *ngIf="product.discount>0">descuento: {{product.discount}}</h5>
+                            <h5 class="subPrice">total: {{product.total_price}}</h5>
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <h5>Total descuento: <u>{{formatNumberWithCommas(shopping_cart.total_discount)}} COP</u></h5>
+    <h5 class="totalDiscount">Total descuento: <u>{{formatNumberWithCommas(shopping_cart.total_discount)}} COP</u></h5>
     <h3>Total: <u>{{formatNumberWithCommas(shopping_cart.total_price)}} COP</u></h3>
     <div class="buttons">
-        <div class="button">
+        <div class="button" (click)="doSomething()">
             <mat-icon fontIcon="delete"></mat-icon>
             <p>Limpiar carrito</p>
         </div>
-        <div class="button">
+        <div class="button" (click)="doSomething()">
             <mat-icon fontIcon="payments"></mat-icon>
             <p>Finalizar compra</p>
         </div>
