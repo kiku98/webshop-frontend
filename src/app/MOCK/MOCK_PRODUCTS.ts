@@ -1,6 +1,6 @@
 import { Product } from '../interfaces/product.interface';
 
-export const MOCK_PRODUCTS: Product[] = [
+export const mock_products: Product[] = [
   {
     name: 'Producto 1',
     price: 10.99,
