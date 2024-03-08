@@ -9,7 +9,6 @@ import { mock_products } from '../MOCK/MOCK_PRODUCTS';
 })
 export class ProductsService {
   products = new BehaviorSubject<Product[]>([]);
-  current_images_obs = this.products.asObservable();
 
   constructor() {
     this.getProductsFromBackend();
