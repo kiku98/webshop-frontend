@@ -28,4 +28,10 @@ export class UsersService {
     // this.users = (await this.restService.getData('users')) as User[];
     this.users = mock_users;
   }
+
+  changeCurrentUserToId(user_id: number): void {
+    const selected_user = this.users.find((user) => user.user_id == user_id);
+    this.currentUser.next(selected_user as User);
+    // TODO: Now also update the shopping cart in the shopping cart service
+  }
 }

@@ -4,10 +4,8 @@
     </div>
     <mat-form-field>
         <mat-label>Selecciona un usuario</mat-label>
-        <mat-select [(value)]="selected_user">
-            <mat-option value="user1">Usario 1</mat-option>
-            <mat-option value="user2">Usario 2</mat-option>
-            <mat-option value="user3">Usario 3</mat-option>
+        <mat-select (selectionChange)="onUserChange($event.value)" [(ngModel)]="selected_user_id">
+            <mat-option *ngFor="let user of users" [value]="user.user_id">{{ user.name }}</mat-option>
         </mat-select>
     </mat-form-field>
 </div>
