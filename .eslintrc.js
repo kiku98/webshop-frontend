@@ -18,7 +18,25 @@ module.exports = {
   ignorePatterns: [".eslintrc.js"],
   rules: {
     "@typescript-eslint/no-unused-vars": ["error", { varsIgnorePattern: "^_" }],
-    "@typescript-eslint/naming-convention": "error",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variable",
+        "format": ["snake_case"]
+      },
+      {
+        "selector": "property",
+        "format": ["snake_case", "camelCase"],
+      },
+      {
+        "selector": "function",
+        "format": ["camelCase"]
+      },
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      }
+    ],
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/explicit-function-return-type": "error",
     "@typescript-eslint/explicit-module-boundary-types": "error",

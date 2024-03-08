@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-manager.component.scss'],
 })
 export class UserManagerComponent {
-  selectedUser = 'user1';
+  selected_user = 'user1';
 }

@@ -42,3 +42,98 @@ body {
 }
 
 $main-color: #d9d9d9;
+
+.rectangle {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 20px;
+  background-color: $main-color;
+  border-radius: 20px;
+}
+
+.title {
+  text-decoration: underline;
+  text-align: center;
+  margin-top: 0%;
+}
+
+.scrollable-table {
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid;
+}
+
+button {
+  margin-right: 5px;
+}
+
+.containerInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
+  text-align: start;
+}
+
+.containerInfo-a {
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: left;
+}
+
+.icon-info {
+  margin-left: 10px;
+}
+
+.icon-info:hover {
+  cursor: pointer;
+}
+
+.icon-add {
+  margin-left: 10px;
+}
+
+.icon-add:hover {
+  cursor: pointer;
+}
+
+.icon-remove {
+  margin-right: 10px;
+}
+
+.icon-remove:hover {
+  cursor: pointer;
+}
+
+.icon-add-cart {
+  margin-left: 20px;
+}
+
+.icon-add-cart:hover {
+  cursor: pointer;
+}
+
+.span {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.quantity {
+  width: 20px;
+  text-align: center;
+}

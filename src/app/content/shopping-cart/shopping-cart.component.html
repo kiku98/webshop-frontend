@@ -1,1 +1,44 @@
-<p>shopping-cart works!</p>
+<div class="rectangle shopping-cart">
+    <h2 class="title">Carrito</h2>
+    <div class="scrollable-table">
+        <table>
+            <tbody>
+                <tr *ngFor="let product of shopping_cart.products">
+                    <td class="alignTop">
+                        <div class="containerInfo">
+                            <div class="containerInfo-a">
+                                {{ product.name }}
+                                <mat-icon class='icon-info' (click)="doSomething()">info</mat-icon>
+                            </div>
+                            {{ product.total_price | currency:'COP':'symbol' }}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="span">
+                            <mat-icon class='icon-remove' (click)="doSomething()">remove_circle_outline</mat-icon>
+                            <p class="quantity">{{ product.quantity }}</p>
+                            <mat-icon class='icon-add' (click)="doSomething()">add_circle</mat-icon>
+                            <mat-icon fontIcon="delete" class='icon-add-cart' (click)="doSomething()"></mat-icon>
+                        </span>
+                        <div class="productPrice">
+                            <h5 class="subPrice" *ngIf="product.discount>0">descuento: {{product.discount}}</h5>
+                            <h5 class="subPrice">total: {{product.total_price}}</h5>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h5 class="totalDiscount">Total descuento: <u>{{formatNumberWithCommas(shopping_cart.total_discount)}} COP</u></h5>
+    <h3>Total: <u>{{formatNumberWithCommas(shopping_cart.total_price)}} COP</u></h3>
+    <div class="buttons">
+        <div class="button" (click)="doSomething()">
+            <mat-icon fontIcon="delete"></mat-icon>
+            <p>Limpiar carrito</p>
+        </div>
+        <div class="button" (click)="doSomething()">
+            <mat-icon fontIcon="payments"></mat-icon>
+            <p>Finalizar compra</p>
+        </div>
+    </div>
+</div>
