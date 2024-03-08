@@ -1,104 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-interface Product {
-  name: string;
-  price: number;
-  description: string;
-  quantity: number;
-}
+import { Product } from 'src/app/interfaces/product.interface';
+import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.scss'],
 })
-export class CatalogComponent {
-  products: Product[] = [
-    {
-      name: 'Producto 1',
-      price: 10.99,
-      description: 'Descripción del Producto 1',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-    {
-      name: 'Producto 2',
-      price: 20.49,
-      description: 'Descripción del Producto 2',
-      quantity: 0,
-    },
-  ];
+export class CatalogComponent implements OnInit {
+  products!: Product[];
+
+  constructor(private productsService: ProductsService) {}
+
+  ngOnInit(): void {
+    this.productsService.products.subscribe((products) => {
+      this.products = products;
+    });
+  }
 
   showInfo(product: Product): void {
     alert(product.description);
