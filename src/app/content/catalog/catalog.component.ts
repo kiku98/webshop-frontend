@@ -10,6 +10,7 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class CatalogComponent implements OnInit {
   products!: Product[];
+  isListView = true;
 
   constructor(private productsService: ProductsService) {}
 
@@ -19,6 +20,13 @@ export class CatalogComponent implements OnInit {
     });
   }
 
+  switchToListView(): void {
+    this.isListView = true;
+  }
+
+  switchToCardView(): void {
+    this.isListView = false;
+  }
   showInfo(product: Product): void {
     alert(product.description);
   }
@@ -32,8 +40,21 @@ export class CatalogComponent implements OnInit {
       product.quantity--;
     }
   }
+  verifyQuantity(product: Product): boolean {
+    return product.quantity > product.quantity;
+  }
+
   addToCart(product: Product): void {
-    alert(`Agregado al carrito: ${product.name}`);
     //Esta función debería enviar el producto al carrito de compras
+
+    if (this.verifyQuantity(product)) {
+      alert('No se pueden agregar más unidades de este producto');
+    } else {
+      // Agregar el producto al carrito de compras
+      alert(`Agregado al carrito: ${product.name}`);
+    }
+
+    //reset de la cantidad del producto
+    product.quantity = 0;
   }
 }
