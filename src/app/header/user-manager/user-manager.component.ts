@@ -15,7 +15,11 @@ export class UserManagerComponent {
   selected_user_id = 1;
 
   constructor(private usersService: UsersService) {
-    this.users = usersService.users;
+    usersService.getUsers().then(() => {
+      this.users = usersService.users;
+      this.selected_user_id = -1;
+      this.currentUser = this.usersService.currentUser.value;
+    });
     usersService.currentUser.subscribe((user) => {
       this.currentUser = user;
     });

@@ -1,11 +1,12 @@
 <div id="user-manager">
-    <div class="circle">
-        <mat-icon fontIcon="person"></mat-icon>
-    </div>
-    <mat-form-field>
-        <mat-label>Selecciona un usuario</mat-label>
-        <mat-select (selectionChange)="onUserChange($event.value)" [(ngModel)]="selected_user_id">
-            <mat-option *ngFor="let user of users" [value]="user.user_id">{{ user.name }}</mat-option>
-        </mat-select>
-    </mat-form-field>
+  <div class="circle">
+    <mat-icon fontIcon="person"></mat-icon>
+  </div>
+  <mat-form-field>
+    <mat-label>Selecciona un usuario</mat-label>
+    <mat-select (selectionChange)="onUserChange($event.value)" [(ngModel)]="selected_user_id">
+      <mat-option *ngFor="let user of users" [value]="user.id">{{ user.name }}</mat-option>
+
+    </mat-select>
+  </mat-form-field>
 </div>

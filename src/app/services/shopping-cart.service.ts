@@ -30,7 +30,7 @@ export class ShoppingCartService {
     //TODO: Remove the MOCK-data and try catch block
     let new_shopping_cart = mock_shopping_cart;
     try {
-      const current_user_id = this.usersService.currentUser.getValue().user_id;
+      const current_user_id = this.usersService.currentUser.getValue().id;
       new_shopping_cart = (
         await this.restService.getData(
           'shopping_cart?user_id=' + current_user_id,
