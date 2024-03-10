@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { RestService } from './rest.service';
+import { RestService } from './rest.service';
 import { Product } from '../interfaces/product.interface';
 
 @Injectable({
@@ -11,6 +12,7 @@ export class ProductsService {
   products = new BehaviorSubject<Product[]>([]);
   private apiUrl = 'shopping-card-backend.vercel.app/api/v1';
 
+  constructor(private restService: RestService) {
   constructor(private restService: RestService) {
     this.getProductsFromBackend();
   }
