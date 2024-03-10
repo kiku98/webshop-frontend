@@ -1,21 +1,28 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+import { RestService } from './rest.service';
 import { Product } from '../interfaces/product.interface';
-import { mock_products } from '../MOCK/MOCK_PRODUCTS';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
   products = new BehaviorSubject<Product[]>([]);
+  private apiUrl = 'shopping-card-backend.vercel.app/api/v1';
 
-  constructor() {
+  constructor(private restService: RestService) {
     this.getProductsFromBackend();
   }
 
-  getProductsFromBackend(): void {
-    //TODO repolace with correct API-Call from RestService
-    this.products.next(mock_products);
+  async getProductsFromBackend(): Promise<void> {
+    try {
+      const response = await this.restService.getData(
+        `${this.apiUrl}/products`,
+      );
+      this.products.next(response.data as Product[]);
+    } catch (error) {
+      console.error('Error fetching products from the backend:', error);
+    }
   }
 }

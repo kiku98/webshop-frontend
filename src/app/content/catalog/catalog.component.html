@@ -18,7 +18,7 @@
                 <mat-icon class='icon-info' title="Ver descripción del producto"
                   (click)="showInfo(product)">info</mat-icon>
               </div>
-              {{ product.price | currency:'COP':'symbol' }}
+              {{ product.unit_price | currency:'COP':'symbol' }}
             </div>
           </td>
           <td>
@@ -47,7 +47,7 @@
           <h3>{{ product.name }}</h3>
           <p>{{ product.description }}</p>
         </div>
-        <div>{{ product.price | currency:'COP':'symbol' }}</div>
+        <div>{{ product.unit_price | currency:'COP':'symbol' }}</div>
       </div>
       <div class="card-actions">
         <mat-icon class='icon-remove' title="Eliminar cantidad del producto"

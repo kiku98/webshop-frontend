@@ -55,7 +55,7 @@ export class CatalogComponent implements OnInit {
 
   checkCartQuantity(product: Product): boolean {
     const cart_quantity = 0;
-    return cart_quantity + product.quantity > product.quantityAvailable;
+    return cart_quantity + product.quantity > product.qty;
   }
 
   addToCart(product: Product): void {
@@ -68,7 +68,7 @@ export class CatalogComponent implements OnInit {
 
     if (this.checkCartQuantity(product)) {
       this.showAlert(
-        `No se pueden agregar más unidades de este producto, supera el límite de stock (${product.quantityAvailable}).`,
+        `No se pueden agregar más unidades de este producto, supera el límite de stock (${product.qty}).`,
       );
     } else {
       // Agregar el producto al carrito de compras

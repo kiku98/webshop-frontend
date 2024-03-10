@@ -3,14 +3,12 @@ import { BehaviorSubject } from 'rxjs';
 
 import { RestService } from './rest.service';
 import { User } from '../interfaces/user.interface';
-import { mock_users } from '../MOCK/MOCK_USERS';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  users!: User[];
-
+  users: User[] = [];
   currentUser = new BehaviorSubject<User>({
     user_id: -1,
     name: 'init',
@@ -18,16 +16,19 @@ export class UsersService {
     email: 'init@init.com',
   });
 
+  private apiUrl = 'https://shopping-card-backend.vercel.app/api/v1';
+
   constructor(private restService: RestService) {
     this.getUsers();
-    this.currentUser.next(this.users[0]);
   }
 
+  // ...
+
   async getUsers(): Promise<void> {
-    //TODO: Remove the MOCK-data and try catch block
-    this.users = mock_users;
     try {
-      this.users = (await this.restService.getData('users')).data as User[];
+      const response = await this.restService.getData(`${this.apiUrl}/users`);
+      this.users = response.data as User[];
+      this.currentUser.next(this.users[0]);
     } catch (error) {
       console.log(
         'Using mock data for users, as the backend can not be reached.',
@@ -36,7 +37,9 @@ export class UsersService {
   }
 
   changeCurrentUserToId(user_id: number): void {
-    const selected_user = this.users.find((user) => user.user_id == user_id);
+    const selected_user = this.users.find(
+      (user) => user.user_id.toString() === user_id.toString(),
+    );
     this.currentUser.next(selected_user as User);
   }
 }
