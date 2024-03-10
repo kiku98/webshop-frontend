@@ -9,20 +9,17 @@ import { Product } from '../interfaces/product.interface';
 })
 export class ProductsService {
   products = new BehaviorSubject<Product[]>([]);
-  private apiUrl = 'shopping-card-backend.vercel.app/api/v1';
 
   constructor(private restService: RestService) {
     this.getProductsFromBackend();
   }
 
   async getProductsFromBackend(): Promise<void> {
-    try {
-      const response = await this.restService.getData(
-        `${this.apiUrl}/products`,
-      );
-      this.products.next(response.data as Product[]);
-    } catch (error) {
-      console.error('Error fetching products from the backend:', error);
-    }
+    //TODO: Remove the MOCK-data and try catch block
+    const x = (await this.restService.getData('products')).data as Product[];
+    x.forEach((product) => {
+      product.quantity = 1;
+    });
+    this.products.next(x);
   }
 }
