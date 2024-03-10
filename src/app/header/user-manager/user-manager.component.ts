@@ -12,16 +12,18 @@ export class UserManagerComponent {
   users!: User[];
   currentUser!: User;
 
-  selected_user_id = 1;
+  selected_id = '1';
 
   constructor(private usersService: UsersService) {
-    this.users = usersService.users;
+    usersService.users.subscribe((users) => {
+      this.users = users;
+    });
     usersService.currentUser.subscribe((user) => {
       this.currentUser = user;
     });
   }
 
-  onUserChange(user_id: number): void {
-    this.usersService.changeCurrentUserToId(user_id);
+  onUserChange(id: string): void {
+    this.usersService.changeCurrentUserToId(id);
   }
 }

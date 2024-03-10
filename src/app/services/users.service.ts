@@ -8,15 +8,12 @@ import { User } from '../interfaces/user.interface';
   providedIn: 'root',
 })
 export class UsersService {
-  users: User[] = [];
+  users = new BehaviorSubject<User[]>([]);
   currentUser = new BehaviorSubject<User>({
-    user_id: -1,
+    id: '-1',
     name: 'init',
-    last_name: 'init',
     email: 'init@init.com',
   });
-
-  private apiUrl = 'https://shopping-card-backend.vercel.app/api/v1';
 
   constructor(private restService: RestService) {
     this.getUsers();
@@ -25,21 +22,13 @@ export class UsersService {
   // ...
 
   async getUsers(): Promise<void> {
-    try {
-      const response = await this.restService.getData(`${this.apiUrl}/users`);
-      this.users = response.data as User[];
-      this.currentUser.next(this.users[0]);
-    } catch (error) {
-      console.log(
-        'Using mock data for users, as the backend can not be reached.',
-      );
-    }
+    const response = await this.restService.getData('users');
+    this.users.next(response.data as User[]);
+    this.currentUser.next(this.users.getValue()[0]);
   }
 
-  changeCurrentUserToId(user_id: number): void {
-    const selected_user = this.users.find(
-      (user) => user.user_id.toString() === user_id.toString(),
-    );
+  changeCurrentUserToId(id: string): void {
+    const selected_user = this.users.getValue().find((user) => user.id == id);
     this.currentUser.next(selected_user as User);
   }
 }
