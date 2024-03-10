@@ -1,1 +1,1 @@
-export const backend_url = 'http://localhost:3000/';
+export const backend_url = 'https://shopping-card-backend.vercel.app/api/v1/';
