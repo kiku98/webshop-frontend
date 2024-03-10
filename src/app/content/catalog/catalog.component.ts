@@ -12,6 +12,7 @@ import { ProductsService } from 'src/app/services/products.service';
 export class CatalogComponent implements OnInit {
   products!: Product[];
   isListView = true;
+  public cart_quantity: number = 0;
 
   constructor(
     private productsService: ProductsService,
@@ -40,7 +41,7 @@ export class CatalogComponent implements OnInit {
   }
 
   showInfo(product: Product): void {
-    alert(product.description);
+    this.showAlert(product.description);
   }
 
   incrementQuantity(product: Product): void {
@@ -54,8 +55,7 @@ export class CatalogComponent implements OnInit {
   }
 
   checkCartQuantity(product: Product): boolean {
-    const cart_quantity = 0;
-    return cart_quantity + product.quantity > product.qty;
+    return this.cart_quantity + product.quantity > product.qty;
   }
 
   addToCart(product: Product): void {
@@ -72,10 +72,11 @@ export class CatalogComponent implements OnInit {
       );
     } else {
       // Agregar el producto al carrito de compras
+      this.cart_quantity += product.quantity;
       this.showAlert(`Agregado al carrito: ${product.name}`);
     }
 
     //reset de la cantidad del producto
-    product.quantity = 0;
+    product.quantity = 1;
   }
 }

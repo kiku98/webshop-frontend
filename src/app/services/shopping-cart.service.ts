@@ -73,4 +73,9 @@ export class ShoppingCartService {
     );
     this.shopping_cart.next(response.data);
   }
+
+  clearCart(): void {
+    const empty_cart: ShoppingCart = { items: [] } as unknown as ShoppingCart;
+    this.shopping_cart.next(empty_cart);
+  }
 }

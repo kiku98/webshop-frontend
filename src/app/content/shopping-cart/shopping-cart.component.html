@@ -1,6 +1,6 @@
 <div class="rectangle shopping-cart">
   <h2 class="title">Carrito</h2>
-  <div class="scrollable-table">
+  <div class="scrollable-table" *ngIf="!cart_empty || !purchase_completed">
     <table>
       <tbody>
         <tr *ngFor="let product of shopping_cart.products">
@@ -32,14 +32,29 @@
       </tbody>
     </table>
   </div>
-  <h5 class="totalDiscount">Total descuento: <u>{{formatNumberWithCommas(shopping_cart.total_discount)}} COP</u></h5>
-  <h3>Total: <u>{{formatNumberWithCommas(shopping_cart.total_price)}} COP</u></h3>
-  <div class="buttons">
-    <div class="button" title="Eliminar todos los productos del carrito de compra" (click)="doSomething()">
+  <div *ngIf="cart_empty" class="empty_cart">
+    <img src="../../../assets/carro-vacio.png" alt="Carrito Vacío">
+    <p>¡El carrito está vacío!</p>
+  </div>
+  <div *ngIf="purchase_completed" class="empty_cart">
+    <img src="../../../assets/carrito-de-compras.png" alt="Compra Finalizada">
+    <p>¡Compra Finalizada!</p>
+    <div class="button" (click)="purchaseCompleted()">
+      <mat-icon>assignment_return</mat-icon>
+      <span>Volver a comprar</span>
+    </div>
+  </div>
+  <h5 class="totalDiscount" *ngIf="!purchase_completed">Total descuento:
+    <u>{{formatNumberWithCommas(shopping_cart.total_discount)}} COP</u>
+  </h5>
+  <h3 *ngIf="!purchase_completed">Total: <u>{{formatNumberWithCommas(shopping_cart.total_price)}} COP</u></h3>
+  <div class="buttons" *ngIf="!purchase_completed">
+    <div class="button" title="Eliminar todos los productos del carrito de compra" (click)="clearCart()">
       <mat-icon fontIcon="delete"></mat-icon>
       <p>Limpiar carrito</p>
     </div>
-    <div class="button" (click)="doSomething()">
+    <div class="button" title="Finalizar compra con los productos del carrito de compra" (click)="purchaseCompleted()"
+      *ngIf="!purchase_completed">
       <mat-icon fontIcon="payments"></mat-icon>
       <p>Finalizar compra</p>
     </div>
