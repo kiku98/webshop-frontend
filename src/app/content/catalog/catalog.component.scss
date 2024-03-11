@@ -1,17 +1,18 @@
 .catalog {
   padding: 20px;
   height: calc(100% - 80px);
-  overflow: scroll;
 }
 
 .table-view {
   display: none;
+  overflow: auto;
 }
 
 .card-view {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  overflow: auto;
 
   .card {
     width: 200px;
