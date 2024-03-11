@@ -1,19 +1,18 @@
+import { Product } from './product.interface';
+
 export interface ShoppingCart {
-  shopping_card_id: number;
-  total_price: number;
-  total_discount: number;
-  products: ShoppingCartProduct[];
+  items: ShoppingCartItem[];
+  total: number;
 }
 
-export interface ShoppingCartProduct {
-  sku: string;
-  name: string;
-  description: string;
-  unit_price: number;
-  unit_type: UnitType;
-  quantity: number;
-  discount: number;
-  total_price: number;
+export interface ShoppingCartItem {
+  cantidad: 1;
+  producto: Product;
+  manejador_reglas: {
+    reglas: any[];
+  };
+  regla_precio: any;
+  total: 500;
 }
 
 export enum UnitType {
@@ -22,8 +21,6 @@ export enum UnitType {
 }
 
 export const empty_shopping_cart: ShoppingCart = {
-  shopping_card_id: -1,
-  total_price: -1,
-  total_discount: -1,
-  products: [],
+  items: [],
+  total: 0,
 };

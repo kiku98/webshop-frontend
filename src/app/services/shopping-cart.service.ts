@@ -5,9 +5,9 @@ import { RestService } from './rest.service';
 import { UsersService } from './users.service';
 import {
   ShoppingCart,
+  ShoppingCartItem,
   empty_shopping_cart,
 } from '../interfaces/shopping-cart.interface';
-import { mock_shopping_cart } from '../MOCK/MOCK_SHOPPING_CART';
 
 @Injectable({
   providedIn: 'root',
@@ -27,19 +27,12 @@ export class ShoppingCartService {
   }
 
   async getShoppingCart(): Promise<void> {
-    //TODO: Remove the MOCK-data and try catch block
-    let new_shopping_cart = mock_shopping_cart;
-    try {
-      const current_user_id = this.usersService.currentUser.getValue().id;
+    let new_shopping_cart = empty_shopping_cart;
+    const current_user_id = this.usersService.currentUser.getValue().id;
+    if (current_user_id != -1) {
       new_shopping_cart = (
-        await this.restService.getData(
-          'shopping_cart?user_id=' + current_user_id,
-        )
+        await this.restService.getData('shopping_cart/' + current_user_id)
       ).data as ShoppingCart;
-    } catch (error) {
-      console.log(
-        'Using mock data for cart, as the backend can not be reached.',
-      );
     }
     this.shopping_cart.next(new_shopping_cart);
   }
@@ -47,9 +40,7 @@ export class ShoppingCartService {
   async addProduct(sku: string, quantity: number): Promise<void> {
     try {
       const response = await this.restService.postData(
-        'shopping_cart/' +
-          this.shopping_cart.getValue().shopping_card_id +
-          '/add',
+        'shopping_cart/' + this.usersService.currentUser.getValue().id + '/add',
         JSON.stringify({
           sku: sku,
           quantity: quantity,
@@ -61,21 +52,28 @@ export class ShoppingCartService {
     }
   }
 
-  async removeProduct(sku: string, quantity: number): Promise<void> {
+  async removeProduct(sku: string): Promise<void> {
     const response = await this.restService.deleteData(
       'shopping_cart/' +
-        this.shopping_cart.getValue().shopping_card_id +
-        '/add',
+        this.usersService.currentUser.getValue().id +
+        '/remove',
       JSON.stringify({
         sku: sku,
-        quantity: quantity,
       }),
     );
     this.shopping_cart.next(response.data);
   }
 
-  clearCart(): void {
-    const empty_cart: ShoppingCart = { items: [] } as unknown as ShoppingCart;
-    this.shopping_cart.next(empty_cart);
+  async completePurchase(): Promise<ShoppingCartItem[]> {
+    const current_user_id = this.usersService.currentUser.getValue().id;
+    const items = (
+      await this.restService.postData(
+        'shopping_cart/' + current_user_id + '/complete_purchase',
+        JSON.stringify({
+          id: current_user_id,
+        }),
+      )
+    ).data as ShoppingCartItem[];
+    return items;
   }
 }

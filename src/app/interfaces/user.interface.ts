@@ -1,5 +1,8 @@
+import { ShoppingCart } from './shopping-cart.interface';
+
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
+  carrito: ShoppingCart;
 }

@@ -27,7 +27,14 @@ export class RestService {
   ): Promise<any> {
     const complete_url = backend_url + sub_url;
     try {
-      const response = await fetch(complete_url, { method, body: data });
+      const response = await fetch(complete_url, {
+        method: method,
+        headers: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'Content-Type': 'application/json',
+        },
+        body: data,
+      });
       return await this.handleResponse(response);
     } catch (error) {
       if (!this.IGNORE_NETWORK_ERRORS) {

@@ -11,10 +11,10 @@ export class ProductsService {
   products = new BehaviorSubject<Product[]>([]);
 
   constructor(private restService: RestService) {
-    this.getProductsFromBackend();
+    this.getProducts();
   }
 
-  async getProductsFromBackend(): Promise<void> {
+  async getProducts(): Promise<void> {
     //TODO: Remove the MOCK-data and try catch block
     const x = (await this.restService.getData('products')).data as Product[];
     x.forEach((product) => {

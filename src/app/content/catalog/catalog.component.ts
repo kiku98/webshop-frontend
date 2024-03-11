@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Product } from 'src/app/interfaces/product.interface';
 import { ProductsService } from 'src/app/services/products.service';
+import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
 @Component({
   selector: 'app-catalog',
@@ -12,10 +13,12 @@ import { ProductsService } from 'src/app/services/products.service';
 export class CatalogComponent implements OnInit {
   products!: Product[];
   isListView = true;
-  public cart_quantity: number = 0;
+
+  cart_quantity: number = 0;
 
   constructor(
     private productsService: ProductsService,
+    private shoppingCartService: ShoppingCartService,
     private snackBar: MatSnackBar,
   ) {}
 
@@ -32,6 +35,7 @@ export class CatalogComponent implements OnInit {
   switchToCardView(): void {
     this.isListView = false;
   }
+
   showAlert(message: string): void {
     this.snackBar.open(message, 'Cerrar', {
       duration: 3000,
@@ -54,8 +58,23 @@ export class CatalogComponent implements OnInit {
     }
   }
 
-  checkCartQuantity(product: Product): boolean {
-    return this.cart_quantity + product.quantity > product.qty;
+  quantityDisponible(product: Product): boolean {
+    const shopping_cart_item = this.shoppingCartService.shopping_cart
+      .getValue()
+      .items.find((item) => item.producto.sku === product.sku);
+
+    if (shopping_cart_item) {
+      return !(
+        shopping_cart_item?.cantidad + product.quantity >
+        product.unidades_disponibles
+      );
+    } else {
+      return !(product.quantity > product.unidades_disponibles);
+    }
+  }
+
+  precioIsPerGramm(product: Product): boolean {
+    return product.sku.startsWith('WE');
   }
 
   addToCart(product: Product): void {
@@ -66,14 +85,14 @@ export class CatalogComponent implements OnInit {
       return; // Do not proceed if product quantity is 0
     }
 
-    if (this.checkCartQuantity(product)) {
+    if (!this.quantityDisponible(product)) {
       this.showAlert(
-        `No se pueden agregar más unidades de este producto, supera el límite de stock (${product.qty}).`,
+        `No se pueden agregar más unidades de este producto, supera el límite de stock (${product.unidades_disponibles}).`,
       );
     } else {
       // Agregar el producto al carrito de compras
-      this.cart_quantity += product.quantity;
-      this.showAlert(`Agregado al carrito: ${product.name}`);
+      this.shoppingCartService.addProduct(product.sku, product.quantity);
+      this.showAlert(`Agregado al carrito: ${product.nombre}`);
     }
 
     //reset de la cantidad del producto
