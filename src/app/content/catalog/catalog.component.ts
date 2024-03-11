@@ -14,6 +14,8 @@ export class CatalogComponent implements OnInit {
   products!: Product[];
   isListView = true;
 
+  cart_quantity: number = 0;
+
   constructor(
     private productsService: ProductsService,
     private shoppingCartService: ShoppingCartService,
@@ -57,7 +59,18 @@ export class CatalogComponent implements OnInit {
   }
 
   quantityDisponible(product: Product): boolean {
-    return product.quantity <= product.unidades_disponibles;
+    const shopping_cart_item = this.shoppingCartService.shopping_cart
+      .getValue()
+      .items.find((item) => item.producto.sku === product.sku);
+
+    if (shopping_cart_item) {
+      return !(
+        shopping_cart_item?.cantidad + product.quantity >
+        product.unidades_disponibles
+      );
+    } else {
+      return !(product.quantity > product.unidades_disponibles);
+    }
   }
 
   precioIsPerGramm(product: Product): boolean {
