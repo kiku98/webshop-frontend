@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { RestService } from './rest.service';
+import { empty_shopping_cart } from '../interfaces/shopping-cart.interface';
 import { User } from '../interfaces/user.interface';
 
 @Injectable({
@@ -13,6 +14,7 @@ export class UsersService {
     id: -1,
     name: 'init',
     email: 'init@init.com',
+    carrito: empty_shopping_cart,
   });
 
   constructor(private restService: RestService) {

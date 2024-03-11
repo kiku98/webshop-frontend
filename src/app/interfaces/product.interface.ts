@@ -1,10 +1,8 @@
 // product.interface.ts
 export interface Product {
   sku: string;
-  name: string;
+  nombre: string;
   description: string;
-  unit_price: number;
-  unit_type: string | null;
-  qty: number;
-  quantity: number;
+  unidades_disponibles: number;
+  precio_unitario: number;
 }
