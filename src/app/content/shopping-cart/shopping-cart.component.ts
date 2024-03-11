@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ShoppingCart } from 'src/app/interfaces/shopping-cart.interface';
+import { Product } from 'src/app/interfaces/product.interface';
+import { empty_shopping_cart } from 'src/app/interfaces/shopping-cart.interface';
+import { ProductsService } from 'src/app/services/products.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
 @Component({
@@ -10,19 +12,29 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
   styleUrls: ['./shopping-cart.component.scss'],
 })
 export class ShoppingCartComponent {
-  shopping_cart!: ShoppingCart;
-  cart_empty: boolean = false;
+  shopping_cart = empty_shopping_cart;
+  cart_empty: boolean = true;
   purchase_completed: boolean = false;
 
   constructor(
     private shoppingCartService: ShoppingCartService,
+    private productsService: ProductsService,
     private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
     this.shoppingCartService.shopping_cart.subscribe((shopping_cart) => {
       this.shopping_cart = shopping_cart;
+      if (this.shopping_cart.items.length > 0) {
+        this.cart_empty = false;
+      } else {
+        this.cart_empty = true;
+      }
     });
+  }
+
+  showInfo(product: Product): void {
+    this.showAlert(product.description);
   }
 
   showAlert(message: string): void {
@@ -31,6 +43,10 @@ export class ShoppingCartComponent {
       horizontalPosition: 'center',
       verticalPosition: 'top',
     });
+  }
+
+  precioIsPerGramm(product: Product): boolean {
+    return product.sku.startsWith('WE');
   }
 
   formatNumberWithCommas(num: number | undefined): string {
@@ -44,23 +60,33 @@ export class ShoppingCartComponent {
     this.showAlert('Does something');
   }
 
-  clearCart(): void {
-    //TODO - Validate if the cart have products to change the cart_empty value in addProduct method
-    this.shoppingCartService.clearCart();
-    this.cart_empty = true;
-    this.purchase_completed = false;
-    this.showAlert('Carrito limpiado exitosamente.');
+  removeItem(product: Product): void {
+    this.shoppingCartService.removeProduct(product.sku);
+    this.showAlert(`Retirado del carrito: ${product.nombre}`);
   }
 
-  purchaseCompleted(): void {
-    //TODO - Implement the purchase logic
-    //TODO - Validate if the cart have products to purchase
-    if (this.purchase_completed) {
-      this.cart_empty = true;
-      this.purchase_completed = false;
+  returnToShoppingCar(): void {
+    this.cart_empty = true;
+    this.purchase_completed = false;
+  }
+
+  async completePurchase(): Promise<void> {
+    const items_not_disponible =
+      await this.shoppingCartService.completePurchase();
+
+    if (items_not_disponible.length > 0) {
+      const error_string: string = items_not_disponible
+        .map(
+          (item) =>
+            `${item.producto.nombre}: ${item.producto.unidades_disponibles} | `,
+        )
+        .join(', ');
+      this.showAlert(`No se pueden agregar más unidades: ${error_string}.`);
     } else {
-      this.shoppingCartService.clearCart();
-      this.showAlert('La compra se ha completado exitosamente.');
+      await Promise.all([
+        this.productsService.getProducts(),
+        this.shoppingCartService.getShoppingCart(),
+      ]);
       this.purchase_completed = true;
     }
   }

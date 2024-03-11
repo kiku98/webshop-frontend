@@ -18,7 +18,9 @@
                 <mat-icon class='icon-info' title="Ver descripción del producto"
                   (click)="showInfo(product)">info</mat-icon>
               </div>
-              {{ product.precio_unitario | currency:'COP':'symbol' }}
+              {{ precioIsPerGramm(product) ? '1000 x ' + (product.precio_unitario | currency:'COP ':'symbol') + ' /
+              gramo' :
+              (product.precio_unitario | currency:'COP ':'symbol') }}
             </div>
           </td>
           <td>

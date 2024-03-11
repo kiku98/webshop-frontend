@@ -13,7 +13,6 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 export class CatalogComponent implements OnInit {
   products!: Product[];
   isListView = true;
-  cart_quantity: number = 0;
 
   constructor(
     private productsService: ProductsService,
@@ -24,7 +23,6 @@ export class CatalogComponent implements OnInit {
   ngOnInit(): void {
     this.productsService.products.subscribe((products) => {
       this.products = products;
-      this.cart_quantity = 0;
     });
   }
 
@@ -59,9 +57,11 @@ export class CatalogComponent implements OnInit {
   }
 
   quantityDisponible(product: Product): boolean {
-    return (
-      this.cart_quantity + product.quantity <= product.unidades_disponibles
-    );
+    return product.quantity <= product.unidades_disponibles;
+  }
+
+  precioIsPerGramm(product: Product): boolean {
+    return product.sku.startsWith('WE');
   }
 
   addToCart(product: Product): void {
@@ -78,7 +78,6 @@ export class CatalogComponent implements OnInit {
       );
     } else {
       // Agregar el producto al carrito de compras
-      this.cart_quantity += product.quantity;
       this.shoppingCartService.addProduct(product.sku, product.quantity);
       this.showAlert(`Agregado al carrito: ${product.nombre}`);
     }

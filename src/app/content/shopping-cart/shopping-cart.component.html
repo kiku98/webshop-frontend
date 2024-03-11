@@ -1,6 +1,6 @@
 <div class="rectangle shopping-cart">
   <h2 class="title">Carrito</h2>
-  <div class="scrollable-table" *ngIf="!cart_empty || !purchase_completed">
+  <div class="scrollable-table" *ngIf="!cart_empty">
     <table>
       <tbody>
         <tr *ngFor="let shopping_cart_item of shopping_cart.items">
@@ -8,53 +8,55 @@
             <div class="containerInfo">
               <div class="containerInfo-a">
                 {{ shopping_cart_item.producto.nombre }}
-                <mat-icon class='icon-info' (click)="doSomething()">info</mat-icon>
+                <mat-icon class='icon-info' title="Ver descripción del producto"
+                  (click)="showInfo(shopping_cart_item.producto)">info</mat-icon>
               </div>
-              {{ shopping_cart_item.total | currency:'COP':'symbol' }}
+              {{shopping_cart_item.cantidad}} x {{ precioIsPerGramm(shopping_cart_item.producto) ? '1000 gramos x ' +
+              (shopping_cart_item.producto.precio_unitario |
+              currency:'COP ':'symbol') + ' / gramo' :
+              (shopping_cart_item.producto.precio_unitario | currency:'COP ':'symbol') }}
             </div>
           </td>
           <td>
             <span class="span">
-              <mat-icon class='icon-remove' title="Eliminar cantidad del producto"
-                (click)="doSomething()">remove_circle_outline</mat-icon>
-              <p class="quantity">{{ shopping_cart_item.cantidad }}</p>
-              <mat-icon class='icon-add' title="Agregar cantidad del producto"
-                (click)="doSomething()">add_circle</mat-icon>
               <mat-icon fontIcon="delete" class='icon-delete-cart-item'
-                title="Eliminar el producto del carrito de compra" (click)="doSomething()"></mat-icon>
+                title="Eliminar el producto del carrito de compra"
+                (click)="removeItem(shopping_cart_item.producto)"></mat-icon>
             </span>
             <div class="productPrice">
               <!-- <h5 class="subPrice" *ngIf="shopping_cart_item.discount>0">descuento: {{shopping_cart_item.discount}}</h5> -->
-              <h5 class="subPrice">total: {{shopping_cart_item.total}}</h5>
+              <h5 class="subPrice">total: {{formatNumberWithCommas(shopping_cart_item.total)}} COP</h5>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div *ngIf="cart_empty" class="empty_cart">
+  <div *ngIf="cart_empty && !purchase_completed" class="empty_cart">
     <img src="../../../assets/carro-vacio.png" alt="Carrito Vacío">
     <p>¡El carrito está vacío!</p>
   </div>
   <div *ngIf="purchase_completed" class="empty_cart">
     <img src="../../../assets/carrito-de-compras.png" alt="Compra Finalizada">
     <p>¡Compra Finalizada!</p>
-    <div class="button" (click)="purchaseCompleted()">
+    <div class="button" (click)="returnToShoppingCar()">
       <mat-icon>assignment_return</mat-icon>
       <span>Volver a comprar</span>
     </div>
   </div>
-  <h5 class="totalDiscount" *ngIf="!purchase_completed">Total descuento:
-    <!-- <u>{{formatNumberWithCommas(shopping_cart.total_discount)}} COP</u> -->
-    TODO
-  </h5>
-  <h3 *ngIf="!purchase_completed">Total: <u>{{formatNumberWithCommas(shopping_cart.total)}} COP</u></h3>
-  <div class="buttons" *ngIf="!purchase_completed">
-    <div class="button" title="Eliminar todos los productos del carrito de compra" (click)="clearCart()">
+  <span *ngIf="!cart_empty">
+    <h5 class="totalDiscount" *ngIf="!purchase_completed">Total descuento:
+      <!-- <u>{{formatNumberWithCommas(shopping_cart.total_discount)}} COP</u> -->
+      TODO
+    </h5>
+    <h3>Total: <u>{{formatNumberWithCommas(shopping_cart.total)}} COP</u></h3>
+  </span>
+  <div class="buttons" *ngIf="!cart_empty">
+    <div class="button" title="Eliminar todos los productos del carrito de compra" (click)="doSomething()">
       <mat-icon fontIcon="delete"></mat-icon>
       <p>Limpiar carrito</p>
     </div>
-    <div class="button" title="Finalizar compra con los productos del carrito de compra" (click)="purchaseCompleted()"
+    <div class="button" title="Finalizar compra con los productos del carrito de compra" (click)="completePurchase()"
       *ngIf="!purchase_completed">
       <mat-icon fontIcon="payments"></mat-icon>
       <p>Finalizar compra</p>
