@@ -12,7 +12,7 @@ export class UserManagerComponent {
   users!: User[];
   currentUser!: User;
 
-  selected_id = '1';
+  selected_id = 1;
 
   constructor(private usersService: UsersService) {
     usersService.users.subscribe((users) => {
@@ -23,7 +23,7 @@ export class UserManagerComponent {
     });
   }
 
-  onUserChange(id: string): void {
+  onUserChange(id: number): void {
     this.usersService.changeCurrentUserToId(id);
   }
 }

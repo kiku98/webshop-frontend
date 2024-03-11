@@ -10,7 +10,7 @@ import { User } from '../interfaces/user.interface';
 export class UsersService {
   users = new BehaviorSubject<User[]>([]);
   currentUser = new BehaviorSubject<User>({
-    id: '-1',
+    id: -1,
     name: 'init',
     email: 'init@init.com',
   });
@@ -21,11 +21,12 @@ export class UsersService {
 
   async getUsers(): Promise<void> {
     const response = await this.restService.getData('users');
-    this.users.next(response.data as User[]);
+    this.users.next(response.data.usuarios as User[]);
+    console.log(this.users.getValue());
     this.currentUser.next(this.users.getValue()[0]);
   }
 
-  changeCurrentUserToId(id: string): void {
+  changeCurrentUserToId(id: number): void {
     const selected_user = this.users.getValue().find((user) => user.id == id);
     this.currentUser.next(selected_user as User);
   }

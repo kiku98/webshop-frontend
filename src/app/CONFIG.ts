@@ -1,1 +1,1 @@
-export const backend_url = 'https://shopping-card-backend.vercel.app/api/v1/';
+export const backend_url = 'https://shopping-cart-delta-pearl.vercel.app/api/';
