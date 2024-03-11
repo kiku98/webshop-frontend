@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Product } from 'src/app/interfaces/product.interface';
-import { empty_shopping_cart } from 'src/app/interfaces/shopping-cart.interface';
+import {
+  ShoppingCartItem,
+  empty_shopping_cart,
+} from 'src/app/interfaces/shopping-cart.interface';
 import { ProductsService } from 'src/app/services/products.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
@@ -68,6 +71,16 @@ export class ShoppingCartComponent {
   returnToShoppingCar(): void {
     this.cart_empty = true;
     this.purchase_completed = false;
+  }
+
+  calcularDisquento(shopping_cart_item: ShoppingCartItem): string {
+    return (
+      -(
+        shopping_cart_item.total -
+        shopping_cart_item.cantidad *
+          shopping_cart_item.producto.precio_unitario
+      ) + ' COP'
+    );
   }
 
   async completePurchase(): Promise<void> {

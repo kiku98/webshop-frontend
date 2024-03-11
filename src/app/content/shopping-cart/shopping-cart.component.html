@@ -24,7 +24,8 @@
                 (click)="removeItem(shopping_cart_item.producto)"></mat-icon>
             </span>
             <div class="productPrice">
-              <!-- <h5 class="subPrice" *ngIf="shopping_cart_item.discount>0">descuento: {{shopping_cart_item.discount}}</h5> -->
+              <h5 *ngIf="shopping_cart_item.producto.sku.startsWith('SP')" class="subPrice">descuento:
+                {{calcularDisquento(shopping_cart_item)}}</h5>
               <h5 class="subPrice">total: {{formatNumberWithCommas(shopping_cart_item.total)}} COP</h5>
             </div>
           </td>
@@ -45,10 +46,6 @@
     </div>
   </div>
   <span *ngIf="!cart_empty">
-    <h5 class="totalDiscount" *ngIf="!purchase_completed">Total descuento:
-      <!-- <u>{{formatNumberWithCommas(shopping_cart.total_discount)}} COP</u> -->
-      TODO
-    </h5>
     <h3>Total: <u>{{formatNumberWithCommas(shopping_cart.total)}} COP</u></h3>
   </span>
   <div class="buttons" *ngIf="!cart_empty">
