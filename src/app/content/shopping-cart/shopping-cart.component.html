@@ -3,29 +3,29 @@
   <div class="scrollable-table" *ngIf="!cart_empty || !purchase_completed">
     <table>
       <tbody>
-        <tr *ngFor="let product of shopping_cart.products">
+        <tr *ngFor="let shopping_cart_item of shopping_cart.items">
           <td class="alignTop">
             <div class="containerInfo">
               <div class="containerInfo-a">
-                {{ product.name }}
+                {{ shopping_cart_item.producto.nombre }}
                 <mat-icon class='icon-info' (click)="doSomething()">info</mat-icon>
               </div>
-              {{ product.total_price | currency:'COP':'symbol' }}
+              {{ shopping_cart_item.total | currency:'COP':'symbol' }}
             </div>
           </td>
           <td>
             <span class="span">
               <mat-icon class='icon-remove' title="Eliminar cantidad del producto"
                 (click)="doSomething()">remove_circle_outline</mat-icon>
-              <p class="quantity">{{ product.quantity }}</p>
+              <p class="quantity">{{ shopping_cart_item.cantidad }}</p>
               <mat-icon class='icon-add' title="Agregar cantidad del producto"
                 (click)="doSomething()">add_circle</mat-icon>
               <mat-icon fontIcon="delete" class='icon-delete-cart-item'
                 title="Eliminar el producto del carrito de compra" (click)="doSomething()"></mat-icon>
             </span>
             <div class="productPrice">
-              <h5 class="subPrice" *ngIf="product.discount>0">descuento: {{product.discount}}</h5>
-              <h5 class="subPrice">total: {{product.total_price}}</h5>
+              <!-- <h5 class="subPrice" *ngIf="shopping_cart_item.discount>0">descuento: {{shopping_cart_item.discount}}</h5> -->
+              <h5 class="subPrice">total: {{shopping_cart_item.total}}</h5>
             </div>
           </td>
         </tr>
@@ -45,9 +45,10 @@
     </div>
   </div>
   <h5 class="totalDiscount" *ngIf="!purchase_completed">Total descuento:
-    <u>{{formatNumberWithCommas(shopping_cart.total_discount)}} COP</u>
+    <!-- <u>{{formatNumberWithCommas(shopping_cart.total_discount)}} COP</u> -->
+    TODO
   </h5>
-  <h3 *ngIf="!purchase_completed">Total: <u>{{formatNumberWithCommas(shopping_cart.total_price)}} COP</u></h3>
+  <h3 *ngIf="!purchase_completed">Total: <u>{{formatNumberWithCommas(shopping_cart.total)}} COP</u></h3>
   <div class="buttons" *ngIf="!purchase_completed">
     <div class="button" title="Eliminar todos los productos del carrito de compra" (click)="clearCart()">
       <mat-icon fontIcon="delete"></mat-icon>

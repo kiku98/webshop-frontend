@@ -47,9 +47,7 @@ export class ShoppingCartService {
   async addProduct(sku: string, quantity: number): Promise<void> {
     try {
       const response = await this.restService.postData(
-        'shopping_cart/' +
-          this.shopping_cart.getValue().shopping_card_id +
-          '/add',
+        'shopping_cart/' + this.usersService.currentUser.getValue().id + '/add',
         JSON.stringify({
           sku: sku,
           quantity: quantity,
@@ -61,14 +59,14 @@ export class ShoppingCartService {
     }
   }
 
-  async removeProduct(sku: string, quantity: number): Promise<void> {
+  async removeProduct(sku: string): Promise<void> {
     const response = await this.restService.deleteData(
       'shopping_cart/' +
-        this.shopping_cart.getValue().shopping_card_id +
+        'shopping_cart/' +
+        this.usersService.currentUser.getValue().id +
         '/add',
       JSON.stringify({
         sku: sku,
-        quantity: quantity,
       }),
     );
     this.shopping_cart.next(response.data);

@@ -12,6 +12,7 @@ const mock_shopping_cart_products: ShoppingCartItem[] = [
       description: 'Nice Apple',
       unidades_disponibles: 20,
       precio_unitario: 300,
+      quantity: 10,
     },
     manejador_reglas: {
       reglas: [],

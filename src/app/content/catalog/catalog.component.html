@@ -14,11 +14,11 @@
           <td>
             <div class="containerInfo">
               <div class="containerInfo-a">
-                {{ product.name }}
+                {{ product.nombre }}
                 <mat-icon class='icon-info' title="Ver descripción del producto"
                   (click)="showInfo(product)">info</mat-icon>
               </div>
-              {{ product.unit_price | currency:'COP':'symbol' }}
+              {{ product.precio_unitario | currency:'COP':'symbol' }}
             </div>
           </td>
           <td>
@@ -44,10 +44,10 @@
       <div class="card-info">
 
         <div>
-          <h3>{{ product.name }}</h3>
+          <h3>{{ product.nombre }}</h3>
           <p>{{ product.description }}</p>
         </div>
-        <div>{{ product.unit_price | currency:'COP':'symbol' }}</div>
+        <div>{{ product.precio_unitario | currency:'COP':'symbol' }}</div>
       </div>
       <div class="card-actions">
         <mat-icon class='icon-remove' title="Eliminar cantidad del producto"

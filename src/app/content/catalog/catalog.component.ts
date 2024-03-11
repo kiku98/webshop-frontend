@@ -55,7 +55,7 @@ export class CatalogComponent implements OnInit {
   }
 
   checkCartQuantity(product: Product): boolean {
-    return this.cart_quantity + product.quantity > product.qty;
+    return this.cart_quantity + product.quantity > product.unidades_disponibles;
   }
 
   addToCart(product: Product): void {
@@ -68,12 +68,12 @@ export class CatalogComponent implements OnInit {
 
     if (this.checkCartQuantity(product)) {
       this.showAlert(
-        `No se pueden agregar más unidades de este producto, supera el límite de stock (${product.qty}).`,
+        `No se pueden agregar más unidades de este producto, supera el límite de stock (${product.unidades_disponibles}).`,
       );
     } else {
       // Agregar el producto al carrito de compras
       this.cart_quantity += product.quantity;
-      this.showAlert(`Agregado al carrito: ${product.name}`);
+      this.showAlert(`Agregado al carrito: ${product.nombre}`);
     }
 
     //reset de la cantidad del producto

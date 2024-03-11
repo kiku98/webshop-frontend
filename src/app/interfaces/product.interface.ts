@@ -5,4 +5,5 @@ export interface Product {
   description: string;
   unidades_disponibles: number;
   precio_unitario: number;
+  quantity: number;
 }
