@@ -24,7 +24,6 @@ export class UsersService {
   async getUsers(): Promise<void> {
     const response = await this.restService.getData('users');
     this.users.next(response.data.usuarios as User[]);
-    console.log(this.users.getValue());
     this.currentUser.next(this.users.getValue()[0]);
   }
 

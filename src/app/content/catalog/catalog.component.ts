@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Product } from 'src/app/interfaces/product.interface';
 import { ProductsService } from 'src/app/services/products.service';
+import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
 @Component({
   selector: 'app-catalog',
@@ -12,16 +13,18 @@ import { ProductsService } from 'src/app/services/products.service';
 export class CatalogComponent implements OnInit {
   products!: Product[];
   isListView = true;
-  public cart_quantity: number = 0;
+  cart_quantity: number = 0;
 
   constructor(
     private productsService: ProductsService,
+    private shoppingCartService: ShoppingCartService,
     private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
     this.productsService.products.subscribe((products) => {
       this.products = products;
+      this.cart_quantity = 0;
     });
   }
 
@@ -32,6 +35,7 @@ export class CatalogComponent implements OnInit {
   switchToCardView(): void {
     this.isListView = false;
   }
+
   showAlert(message: string): void {
     this.snackBar.open(message, 'Cerrar', {
       duration: 3000,
@@ -54,8 +58,10 @@ export class CatalogComponent implements OnInit {
     }
   }
 
-  checkCartQuantity(product: Product): boolean {
-    return this.cart_quantity + product.quantity > product.unidades_disponibles;
+  quantityDisponible(product: Product): boolean {
+    return (
+      this.cart_quantity + product.quantity <= product.unidades_disponibles
+    );
   }
 
   addToCart(product: Product): void {
@@ -66,13 +72,14 @@ export class CatalogComponent implements OnInit {
       return; // Do not proceed if product quantity is 0
     }
 
-    if (this.checkCartQuantity(product)) {
+    if (!this.quantityDisponible(product)) {
       this.showAlert(
         `No se pueden agregar más unidades de este producto, supera el límite de stock (${product.unidades_disponibles}).`,
       );
     } else {
       // Agregar el producto al carrito de compras
       this.cart_quantity += product.quantity;
+      this.shoppingCartService.addProduct(product.sku, product.quantity);
       this.showAlert(`Agregado al carrito: ${product.nombre}`);
     }
 

@@ -32,9 +32,7 @@ export class ShoppingCartService {
     try {
       const current_user_id = this.usersService.currentUser.getValue().id;
       new_shopping_cart = (
-        await this.restService.getData(
-          'shopping_cart?user_id=' + current_user_id,
-        )
+        await this.restService.getData('shopping_cart/' + current_user_id)
       ).data as ShoppingCart;
     } catch (error) {
       console.log(
