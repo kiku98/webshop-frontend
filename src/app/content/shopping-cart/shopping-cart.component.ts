@@ -59,15 +59,6 @@ export class ShoppingCartComponent {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
-  doSomething(): void {
-    this.showAlert('Does something');
-  }
-
-  removeItem(product: Product): void {
-    this.shoppingCartService.removeProduct(product.sku);
-    this.showAlert(`Retirado del carrito: ${product.nombre}`);
-  }
-
   returnToShoppingCar(): void {
     this.cart_empty = true;
     this.purchase_completed = false;
@@ -81,6 +72,15 @@ export class ShoppingCartComponent {
           shopping_cart_item.producto.precio_unitario
       ) + ' COP'
     );
+  }
+
+  removeItem(product: Product): void {
+    this.shoppingCartService.removeProduct(product.sku);
+    this.showAlert(`Retirado del carrito: ${product.nombre}`);
+  }
+
+  clearShoppingCart(): void {
+    this.shoppingCartService.clearShoppingCart();
   }
 
   async completePurchase(): Promise<void> {

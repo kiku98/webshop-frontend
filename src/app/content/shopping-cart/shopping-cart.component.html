@@ -49,7 +49,7 @@
     <h3>Total: <u>{{formatNumberWithCommas(shopping_cart.total)}} COP</u></h3>
   </span>
   <div class="buttons" *ngIf="!cart_empty">
-    <div class="button" title="Eliminar todos los productos del carrito de compra" (click)="doSomething()">
+    <div class="button" title="Eliminar todos los productos del carrito de compra" (click)="clearShoppingCart()">
       <mat-icon fontIcon="delete"></mat-icon>
       <p>Limpiar carrito</p>
     </div>

@@ -64,6 +64,20 @@ export class ShoppingCartService {
     this.shopping_cart.next(response.data);
   }
 
+  async clearShoppingCart(): Promise<void> {
+    try {
+      const response = await this.restService.postData(
+        'shopping_cart/' +
+          this.usersService.currentUser.getValue().id +
+          '/clear',
+        JSON.stringify({}),
+      );
+      this.shopping_cart.next(response.data);
+    } catch (error) {
+      alert('This product is not available in this canitdad');
+    }
+  }
+
   async completePurchase(): Promise<ShoppingCartItem[]> {
     const current_user_id = this.usersService.currentUser.getValue().id;
     const items = (
